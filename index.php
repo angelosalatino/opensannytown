@@ -23,7 +23,7 @@ and open the template in the editor.
 
                 function initmap() {
                     L.mapbox.accessToken = 'pk.eyJ1IjoiYW5nZWxvc2FsYXRpbm8iLCJhIjoiNWRuRUZiVSJ9.oGXR_Mp6PKxf9HcVeArsLw';
-                    var map = L.mapbox.map('map', 'examples.map-i86nkdio')
+                    var map = L.mapbox.map('map', 'angelosalatino.k69477ai')
                             .setView(new L.LatLng(41.0002535,16.799486),15);
                 }
 
