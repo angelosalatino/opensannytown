@@ -44,13 +44,13 @@ and open the template in the editor.
             <h1><a href="index.php">Open Sannitown</a> We are Data</h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li>
-                        <a href="" class="icon fa-angle-down">Layouts</a>
+                        <a href="" class="icon fa-angle-down">Show</a>
                         <ul>
-                            <li><a href="generic.html">Generic</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="elements.html">Elements</a></li>
+                            <li><a href="generic.html">Restaurant & Pizzeria</a></li>
+                            <li><a href="contact.html">Bar</a></li>
+                            <li><a href="elements.html">Supermarkets</a></li>
                             <li>
                                 <a href="">Submenu</a>
                                 <ul>
@@ -62,7 +62,7 @@ and open the template in the editor.
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#" class="button">Sign Up</a></li>
+                    <!--<li><a href="#" class="button">Sign Up</a></li>-->
                 </ul>
             </nav>
         </header>
