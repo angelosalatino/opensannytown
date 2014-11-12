@@ -9,7 +9,8 @@ and open the template in the editor.
 */
 
 #map{
-    height: 600px;
-    width: 600px;
+    /*meno dieci pixel per via del padding*/
+    height: 886px;
+    width: 1270px;
     margin: auto;
 }
