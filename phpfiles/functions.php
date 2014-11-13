@@ -111,9 +111,47 @@ function get_busstop( $geo_area )
 
     # get all school nodes with xpath
     $xpath = '//node[tag[@k = "highway" and @v = "bus_stop"]]';
-    $cafes = $result->xpath($xpath);
+    $busstops = $result->xpath($xpath);
     
-    $geoJson =  create_osm_objects($cafes,"#fa0","bus");
+    $geoJson =  create_osm_objects($busstops,"#fa0","bus");
+    
+    return $geoJson;
+}
+
+function get_restaurants( $geo_area )
+{
+   
+    $query = 'node
+      ["amenity"="restaurant"]
+      ('.$geo_area->latitude_south.','.$geo_area->longitude_west.','.$geo_area->latitude_north.','.$geo_area->longitude_east.');
+    out;';
+    $result = make_query($query);
+
+
+    # get all school nodes with xpath
+    $xpath = '//node[tag[@k = "amenity" and @v = "restaurant"]]';
+    $restaurants = $result->xpath($xpath);
+    
+    $geoJson =  create_osm_objects($restaurants,"#0A910A","restaurant");
+    
+    return $geoJson;
+}
+
+function get_supermarkets( $geo_area )
+{
+   
+    $query = 'node
+      ["shop"="supermarket"]
+      ('.$geo_area->latitude_south.','.$geo_area->longitude_west.','.$geo_area->latitude_north.','.$geo_area->longitude_east.');
+    out;';
+    $result = make_query($query);
+
+
+    # get all school nodes with xpath
+    $xpath = '//node[tag[@k = "shop" and @v = "supermarket"]]';
+    $supermarkets = $result->xpath($xpath);
+    
+    $geoJson =  create_osm_objects($supermarkets,"#EBEB34","grocery");
     
     return $geoJson;
 }
@@ -121,11 +159,17 @@ function get_busstop( $geo_area )
 function parse_request( $request, $geo_area )
 {
     switch ($request) {
+        case "restaurants":
+          $geoJson = get_restaurants( $geo_area );
+          break;
         case "bars":
           $geoJson = get_cafe( $geo_area );
           break;
         case "bus_stop":
           $geoJson = get_busstop( $geo_area );
+          break;
+        case "supermarkets":
+          $geoJson = get_supermarkets( $geo_area );
           break;
         default:
           $geoJson = get_cafe( $geo_area );

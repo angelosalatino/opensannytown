@@ -11,6 +11,6 @@ include("./phpfiles/initFunctions.php");
 include("./phpfiles/functions.php");
 $geographical_area = get_area_location();
 
-$geoJson = get_busstop( $geographical_area );
+$geoJson = get_restaurants( $geographical_area );
 echo json_encode($geoJson,JSON_NUMERIC_CHECK);
 ?>
