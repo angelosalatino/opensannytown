@@ -4,6 +4,12 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
+<?php
+    include("./phpfiles/initFunctions.php");
+    include("./phpfiles/functions.php");   
+?>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -48,9 +54,10 @@ and open the template in the editor.
                     <li>
                         <a href="" class="icon fa-angle-down">Show</a>
                         <ul>
-                            <li><a href="generic.html">Restaurant & Pizzeria</a></li>
-                            <li><a href="contact.html">Bar</a></li>
-                            <li><a href="elements.html">Supermarkets</a></li>
+                            <li><a href="index.php?id_request=restaurants">Restaurant & Pizzeria</a></li>
+                            <li><a href="index.php?id_request=bars">Bar</a></li>
+                            <li><a href="index.php?id_request=supermarkets">Supermarkets</a></li>
+                            <li><a href="index.php?id_request=bus_stop">Bus Stop</a></li>
                             <li>
                                 <a href="">Submenu</a>
                                 <ul>
@@ -83,15 +90,33 @@ and open the template in the editor.
             <section class="box special map-container">
                 <section id="map">
                     <script>
-
-                        function initmap() {
-                            L.mapbox.accessToken = 'pk.eyJ1IjoiYW5nZWxvc2FsYXRpbm8iLCJhIjoiNWRuRUZiVSJ9.oGXR_Mp6PKxf9HcVeArsLw';
-                            var map = L.mapbox.map('map', 'angelosalatino.k69477ai')
-                                    .setView(new L.LatLng(41.0002535,16.799486),16);
-                        }
+                        
+                        <?php 
+                        $position = get_location(); 
+                        $geographical_area = get_area_location();
+                        ?>
+                            function initmap() {
+                                
+                                <?php
+                                if(isset($_GET['id_request']))
+                                {
+                                    echo "var geoJson = ". json_encode(parse_request($_GET['id_request'], $geographical_area));
+                                }                             
+                                else
+                                {
+                                   echo "var geoJson = ". json_encode(get_cafe($geographical_area),JSON_NUMERIC_CHECK);  
+                                }                                
+                                ?>;
+                                
+                                L.mapbox.accessToken = 'pk.eyJ1IjoiYW5nZWxvc2FsYXRpbm8iLCJhIjoiNWRuRUZiVSJ9.oGXR_Mp6PKxf9HcVeArsLw';
+                                var map = L.mapbox.map('map', 'angelosalatino.k69477ai')
+                                        .setView(new L.LatLng(<?php print($position->latitude); ?>,<?php print($position->longitude); ?>),16)
+                                        .featureLayer.setGeoJSON(geoJson);
+                                
+                            }
 
                 
-                        initmap();
+                            initmap();
                     </script>
                 </section>
                 <!--<header class="major">
@@ -103,7 +128,6 @@ and open the template in the editor.
                 </header>
                 <span class="image featured"><img src="images/pic01.jpg" alt="" /></span>-->
             </section>
-            
             <!--<section class="box special features">
                 <div class="features-row">
                     <section>
