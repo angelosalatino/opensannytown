@@ -8,11 +8,16 @@
 
 function make_query( $query )
 {
-    $context = stream_context_create(['http' => [
+    $context = stream_context_create(array('http' => array(
         'method'  => 'POST',
-        'header' => ['Content-Type: application/x-www-form-urlencoded'],
-        'content' => 'data=' . urlencode($query),
-    ]]);
+        'header' => 'Content-Type: application/x-www-form-urlencoded',
+        'content' => 'data=' . urlencode($query)
+        )));  
+//    $context = stream_context_create(['http' => [
+//        'method'  => 'POST',
+//        'header' => ['Content-Type: application/x-www-form-urlencoded'],
+//        'content' => 'data=' . urlencode($query),
+//    ]]);
         
     # please do not stress this service, this example is for demonstration purposes only.
     $endpoint = 'http://overpass-api.de/api/interpreter';
