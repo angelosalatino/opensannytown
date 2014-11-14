@@ -7,7 +7,7 @@
  */
 
 
-class amenity
+class Amenity
 {
     public $xpath;
     public $marker_color;
@@ -20,12 +20,6 @@ class amenity
         $this->marker_symbol=$marker_symbol_t;
     }
 }
-
-$amenities = array( 
-		   "cafe" => new amenity('//node[tag[@k = "amenity" and @v = "cafe"]]',"#fc4353","cafe"), 
-		   "restaurants" => new amenity('//node[tag[@k = "amenity" and @v = "restaurant"]]',"#0A910A","restaurant"), 
-		   "bus_stop" => new amenity('//node[tag[@k = "highway" and @v = "bus_stop"]]',"#fa0","bus")
-		  );
 
 
 

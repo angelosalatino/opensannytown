@@ -7,7 +7,8 @@ and open the template in the editor.
 
 <?php
     include("./phpfiles/initFunctions.php");
-    include("./phpfiles/functions.php");   
+    include("./phpfiles/functions.php");
+    include("./phpfiles/feature_osm.php");
 ?>
 
 <html>
@@ -55,9 +56,9 @@ and open the template in the editor.
                         <a href="" class="icon fa-angle-down">Show</a>
                         <ul>
                             <li><a href="index.php?id_request=restaurants">Restaurant & Pizzeria</a></li>
-                            <li><a href="index.php?id_request=bars">Bar</a></li>
+                            <li><a href="index.php?id_request=cafes">Bar</a></li>
                             <li><a href="index.php?id_request=supermarkets">Supermarkets</a></li>
-                            <li><a href="index.php?id_request=bus_stop">Bus Stop</a></li>
+                            <li><a href="index.php?id_request=bus_stops">Bus Stop</a></li>
                             <li>
                                 <a href="">Submenu</a>
                                 <ul>
@@ -92,9 +93,12 @@ and open the template in the editor.
                     <script>
                         
                         <?php 
+                        session_start();
                         $position = get_location(); 
                         $geographical_area = get_area_location();
+                        if(!isset($_SESSION["data_properties"])){get_amenity_data();}
                         ?>
+                            
                             function initmap() {
                                 
                                 <?php
@@ -104,7 +108,7 @@ and open the template in the editor.
                                 }                             
                                 else
                                 {
-                                   echo "var geoJson = ". json_encode(get_cafe($geographical_area),JSON_NUMERIC_CHECK);  
+                                   echo "var geoJson = ". json_encode(parse_request('default_request', $geographical_area));  
                                 }                                
                                 ?>;
                                 
@@ -214,6 +218,7 @@ and open the template in the editor.
                 <li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
             </ul>
             <ul class="copyright">
+                <li><a href="./destroySession.php">Destroy Session</a></li>
                 <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
             </ul>
         </footer>

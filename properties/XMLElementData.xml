@@ -7,19 +7,8 @@ and open the template in the editor.
 
 
 <elements>
-    <element id="1" name="cafe">
-        <xpath value='//node[tag[@k = "amenity" and @v = "cafe"]]' />
-        <marker_color value='#fc4353' />
-        <marker_symbol value='cafe'/>
-    </element>
-    <element id="2" name="restaurants">
-        <xpath value='//node[tag[@k = "amenity" and @v = "restaurant"]]' />
-        <marker_color value='#0A910A' />
-        <marker_symbol value='restaurant'/>
-    </element>
-    <element id="2" name="bus_stop">
-        <xpath value='//node[tag[@k = "highway" and @v = "bus_stop"]]' />
-        <marker_color value='#fa0' />
-        <marker_symbol value='bus'/>
-    </element>
+    <element id="1" origin="osm" name="cafes" marker_color="#fc4353" marker_symbol="cafe" queryXpath='//node[tag[@k = "amenity" and @v = "cafe"]]'/>
+    <element id="2" origin="osm" name="restaurants" marker_color="#0A910A" marker_symbol="restaurant" queryXpath='//node[tag[@k = "amenity" and @v = "restaurant"]]'/>
+    <element id="3" origin="osm" name="bus_stops" marker_color="#fa0" marker_symbol="bus" queryXpath='//node[tag[@k = "highway" and @v = "bus_stop"]]'/>
+    <element id="4" origin="osm" name="supermarkets" marker_color="#EBEB34" marker_symbol="grocery" queryXpath='//node[tag[@k = "shop" and @v = "supermarket"]]'/>
 </elements>

@@ -33,3 +33,40 @@ function get_area_location()
     
     return $result[0];
 }
+
+function get_amenity_data()
+{
+    $amenities = array();
+    
+    $xml = simplexml_load_file("./properties/XMLElementData.xml");
+        
+    $objects = $xml->xpath("/elements/element");
+    
+    # Loop through rows to build feature arrays
+    foreach ($objects as $object) {
+        $am=$object->attributes();
+        $amenity = new Amenity((string)$am['queryXpath'],(string)$am['marker_color'],(string)$am['marker_symbol']);
+
+        # Add feature arrays to feature collection array
+        $amenities = array_merge($amenities, array((string)$am['name'] => $amenity));
+    }
+    
+    $_SESSION["data_properties"] = serialize($amenities);
+    //print_r($amenities);
+    
+//        echo $amenities['bus_stop']->xpath;
+//        echo $amenities['restaurants']->marker_color;
+//        echo $amenities['cafe']->marker_symbol;
+    
+//    foreach ($amenities as $object) {
+//        echo $object->xpath;
+//        echo $object->marker_color;
+//        echo $object->marker_symbol;
+//    }
+    
+//    $json = json_encode($xml);
+//    echo $json;
+//$array = json_decode($json,TRUE);
+//    print_r($array);
+    //print_r($result);
+}

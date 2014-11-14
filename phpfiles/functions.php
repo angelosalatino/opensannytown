@@ -33,8 +33,6 @@ function create_osm_objects( $objects, $marker_color ,$marker_symbol )
     # Loop through rows to build feature arrays
     foreach ($objects as $object) {
         $name = $object->xpath('tag[@k = "name"]');// + ['(unnamed)'];
-        $coordinates = "[".$object['lon'].",".$object['lat']."]";
-        $name = (string)$name[0]['v'];
         $feature = array(
             'type' => 'Feature', 
             'geometry' => array(
@@ -44,7 +42,7 @@ function create_osm_objects( $objects, $marker_color ,$marker_symbol )
             ),
             # Pass other attribute columns here
             'properties' => array(
-                'title' => $name,
+                'title' => (string)$name[0]['v'],
                 'description' => $object['Description'],
                 'marker-color' => $marker_color,
                 'marker-size' => "large",
@@ -57,7 +55,17 @@ function create_osm_objects( $objects, $marker_color ,$marker_symbol )
     return $geojson;
 }
 
-function get_cafe( $geo_area )
+function create_geoJson_fromXML( $result, $type)
+{
+    if(!isset($_SESSION["data_properties"])){    get_amenity_data();}
+    $properties=unserialize($_SESSION["data_properties"]);
+    
+    $supermarkets = $result->xpath($properties[$type]->xpath);
+    $geoJson =  create_osm_objects($supermarkets,$properties[$type]->marker_color,$properties[$type]->marker_symbol);
+    return $geoJson;
+}
+
+function get_cafes( $geo_area )
 {
     
     /**
@@ -82,11 +90,12 @@ function get_cafe( $geo_area )
     // 2.) Work with the XML Result
     //
         
+     $geoJson =  create_geoJson_fromXML( $result, 'cafes');
     # get all school nodes with xpath
-    $xpath = '//node[tag[@k = "amenity" and @v = "cafe"]]';
-    $cafes = $result->xpath($xpath);
-    
-    $geoJson =  create_osm_objects($cafes,"#fc4353","cafe");
+//    $xpath = '//node[tag[@k = "amenity" and @v = "cafe"]]';
+//    $cafes = $result->xpath($xpath);
+//    
+//    $geoJson =  create_osm_objects($cafes,"#fc4353","cafe");
     
     return $geoJson;
 //    printf("%d School(s) found:\n", count($cafes));
@@ -98,7 +107,7 @@ function get_cafe( $geo_area )
 //    }
 }
 
-function get_busstop( $geo_area )
+function get_busstops( $geo_area )
 {
    
     $query = 'node
@@ -107,13 +116,14 @@ function get_busstop( $geo_area )
     out;';
 
     $result = make_query($query);
-
+ 
+    $geoJson =  create_geoJson_fromXML( $result, 'bus_stops');
 
     # get all school nodes with xpath
-    $xpath = '//node[tag[@k = "highway" and @v = "bus_stop"]]';
-    $busstops = $result->xpath($xpath);
-    
-    $geoJson =  create_osm_objects($busstops,"#fa0","bus");
+//    $xpath = '//node[tag[@k = "highway" and @v = "bus_stop"]]';
+//    $busstops = $result->xpath($xpath);
+//    
+//    $geoJson =  create_osm_objects($busstops,"#fa0","bus");
     
     return $geoJson;
 }
@@ -127,12 +137,13 @@ function get_restaurants( $geo_area )
     out;';
     $result = make_query($query);
 
+    $geoJson =  create_geoJson_fromXML( $result, 'restaurants');
 
     # get all school nodes with xpath
-    $xpath = '//node[tag[@k = "amenity" and @v = "restaurant"]]';
-    $restaurants = $result->xpath($xpath);
-    
-    $geoJson =  create_osm_objects($restaurants,"#0A910A","restaurant");
+//    $xpath = '//node[tag[@k = "amenity" and @v = "restaurant"]]';
+//    $restaurants = $result->xpath($xpath);
+//    
+//    $geoJson =  create_osm_objects($restaurants,"#0A910A","restaurant");
     
     return $geoJson;
 }
@@ -145,13 +156,14 @@ function get_supermarkets( $geo_area )
       ('.$geo_area->latitude_south.','.$geo_area->longitude_west.','.$geo_area->latitude_north.','.$geo_area->longitude_east.');
     out;';
     $result = make_query($query);
-
-
-    # get all school nodes with xpath
-    $xpath = '//node[tag[@k = "shop" and @v = "supermarket"]]';
-    $supermarkets = $result->xpath($xpath);
     
-    $geoJson =  create_osm_objects($supermarkets,"#EBEB34","grocery");
+    $geoJson =  create_geoJson_fromXML( $result, 'supermarkets');
+    
+    # get all school nodes with xpath
+//    $xpath = '//node[tag[@k = "shop" and @v = "supermarket"]]';
+//    $supermarkets = $result->xpath($xpath);
+//    
+//    $geoJson =  create_osm_objects($supermarkets,"#EBEB34","grocery");
     
     return $geoJson;
 }
@@ -174,17 +186,17 @@ function parse_request( $request, $geo_area )
         case "restaurants":
           $geoJson = get_restaurants( $geo_area );
           break;
-        case "bars":
-          $geoJson = get_cafe( $geo_area );
+        case "cafes":
+          $geoJson = get_cafes( $geo_area );
           break;
-        case "bus_stop":
-          $geoJson = get_busstop( $geo_area );
+        case "bus_stops":
+          $geoJson = get_busstops( $geo_area );
           break;
         case "supermarkets":
           $geoJson = get_supermarkets( $geo_area );
           break;
         default:
-          $geoJson = get_cafe( $geo_area );
+          $geoJson = get_cafes( $geo_area );
       }
       
       return $geoJson;
