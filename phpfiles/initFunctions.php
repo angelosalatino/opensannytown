@@ -11,9 +11,9 @@
  */
 function get_location()
 {
-    $xml = simplexml_load_file("./properties/XMLProperties.xml");
+    $xml = simplexml_load_file("./properties/XMLGeographicalProperties.xml");
         
-    $result = $xml->xpath("/data/geographical_place");
+    $result = $xml->xpath("/geographical_data/geographical_place");
     
 //    print($result[0]->name);
 //    print($result[0]->latitude);
@@ -27,9 +27,9 @@ function get_location()
  */
 function get_area_location()
 {
-    $xml = simplexml_load_file("./properties/XMLProperties.xml");
+    $xml = simplexml_load_file("./properties/XMLGeographicalProperties.xml");
         
-    $result = $xml->xpath("/data/geographical_area");
+    $result = $xml->xpath("/geographical_data/geographical_area");
     
     return $result[0];
 }

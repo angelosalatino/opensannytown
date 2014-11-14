@@ -156,6 +156,18 @@ function get_supermarkets( $geo_area )
     return $geoJson;
 }
 
+function get_allPOI( $geo_area )
+{
+    $query = 'node
+      ["amenity"~".*"]
+      ('.$geo_area->latitude_south.','.$geo_area->longitude_west.','.$geo_area->latitude_north.','.$geo_area->longitude_east.');
+    out;';
+    $result = make_query($query);
+     
+    
+    // TO BE FINISED
+}
+
 function parse_request( $request, $geo_area )
 {
     switch ($request) {

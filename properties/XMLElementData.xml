@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<elements>
+    <element id="1" name="cafe">
+        <xpath value='//node[tag[@k = "amenity" and @v = "cafe"]]' />
+        <marker_color value='#fc4353' />
+        <marker_symbol value='cafe'/>
+    </element>
+    <element id="2" name="restaurants">
+        <xpath value='//node[tag[@k = "amenity" and @v = "restaurant"]]' />
+        <marker_color value='#0A910A' />
+        <marker_symbol value='restaurant'/>
+    </element>
+    <element id="2" name="bus_stop">
+        <xpath value='//node[tag[@k = "highway" and @v = "bus_stop"]]' />
+        <marker_color value='#fa0' />
+        <marker_symbol value='bus'/>
+    </element>
+</elements>
